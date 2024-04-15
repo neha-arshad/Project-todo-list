@@ -96,16 +96,17 @@ async function myTodo() {
 			}
 			]
 		);
+		
 		let Removetodo = todo.splice(removeTodo.index,1);
 		console.log(Removetodo);
 	}
 
 	// >>"VIEW LIST"<<
 async function view(){
-	console.log(`\n Your Todo-List\n`)
+	console.log(chalk.magentaBright.italic(`\n Your Todo-List\n`));
 	todo.forEach((view,index) =>{
 		console.log(`${index}: ${view}`)
-	})
+	});
 }
 }
 }
