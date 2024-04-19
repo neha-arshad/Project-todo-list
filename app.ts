@@ -1,115 +1,107 @@
-import inquirer from "inquirer"
-import chalk from "chalk"
-import chalkanimation from "chalk-animation"
+#! /usr/bin/env node
 
-const sleep = (ms: number = 2000) => 
-new Promise(resolve =>
-	 setTimeout(resolve, ms));
+import inquirer from "inquirer";
+import chalk from "chalk";
+import chalkanimation from "chalk-animation";
+
+const sleep = (ms: number = 2000) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 const animation = chalkanimation.rainbow("Wellcome To My Todo-List📝");
 await sleep();
-animation.stop()
+animation.stop();
 
-
-const todo: string[] = []
+const todo: string[] = [];
 let Todos: boolean = true;
 
 async function myTodo() {
-	while(Todos){
-	const mytodos = await inquirer.prompt(
-		[
-			{
-				name: "option",
-				type: "list",
-				message: "select an option",
-				choices: ["Add", "change", "remove", "view list", "Exit"]
-			}
-		]
-	);
+  while (Todos) {
+    const mytodos = await inquirer.prompt([
+      {
+        name: "option",
+        type: "list",
+        message: "select an option",
+        choices: ["Add", "change", "remove", "view list", "Exit"],
+      },
+    ]);
 
-	if(mytodos.option === "Add"){
-		await add();
-	}
+    if (mytodos.option === "Add") {
+      await add();
+    } else if (mytodos.option === "change") {
+      await change();
+    } else if (mytodos.option === "remove") {
+      await remove();
+    } else if (mytodos.option === "view list") {
+      await view();
+    } else if (mytodos.option === "Exit") {
+      Todos = false;
+    }
 
-	else if (mytodos.option === "change"){
-		await change();
-	}
+    // >> "ADD" <<
+    async function add() {
+      const addTodo = await inquirer.prompt([
+        {
+          name: "addtodos",
+          type: "input",
+          message: chalk.magenta.blueBright.bold(
+            "What would you like to add in todos?"
+          ),
+        },
+      ]);
+      todo.push(addTodo.addtodos);
+      console.log(
+        chalk.blackBright(`\n ${addTodo.addtodos} Add successfully ☑️ \n`)
+      );
+    }
 
-	else if (mytodos.option === "remove"){
-		await remove();
-	}
+    // >> "CHANGE" <<
+    async function change() {
+      await view();
+      const changeTodos = await inquirer.prompt([
+        {
+          name: "index",
+          type: "number",
+          message: chalk.magenta.blueBright.bold(
+            "which Todo you want to change?\n Enter index No:"
+          ),
+        },
+        {
+          name: "newtodo",
+          type: "input",
+          message: chalk.magenta.blueBright.bold(
+            "What would you like to add in todos?"
+          ),
+        },
+      ]);
 
-	else if (mytodos.option === "view list"){
-		await view();
-	}
+      todo[changeTodos.index] = changeTodos.newtodo;
+      console.log(chalk.redBright(`\n new todo ${changeTodos.newtodo}`));
+    }
 
-	else if (mytodos.option === "Exit"){
-		Todos = false
-	}
-	
-	// >> "ADD" <<
-	async function add() {
-		const addTodo = await inquirer.prompt(
-		[
-			{
-				name: "addtodos",
-				type: "input",
-				message: chalk.magenta.blueBright.bold("What would you like to add in todos?")
-			},
-		]
-	)
-		todo.push(addTodo.addtodos)
-		console.log(chalk.blackBright(`\n ${addTodo.addtodos} Add successfully ☑️ \n`))
-	}
+    // >> "REMOVE" <<
+    async function remove() {
+      await view();
+      const removeTodo = await inquirer.prompt([
+        {
+          name: "index",
+          type: "number",
+          message: chalk.magenta.blueBright.bold(
+            "what would you like to remove in todos?"
+          ),
+        },
+      ]);
 
-	// >> "CHANGE" <<
-	async function change(){
-		await view();
-		const changeTodos = await inquirer.prompt(
-			[
-				{
-					name: "index",
-					type: "number",
-					message: chalk.magenta.blueBright.bold("which Todo you want to change?\n Enter index No:")
-				},
-			{
-				name: "newtodo",
-				type: "input",
-				message: chalk.magenta.blueBright.bold("What would you like to add in todos?")
-			}
-			]
-		);
+      let Removetodo = todo.splice(removeTodo.index, 1);
+      console.log(Removetodo);
+    }
 
-		todo[changeTodos.index] = changeTodos.newtodo
-		console.log(chalk.redBright(`\n new todo ${changeTodos.newtodo}`));
-	}
-
-	// >> "REMOVE" <<
-	async function remove(){
-		await view();
-		const removeTodo = await inquirer.prompt(
-		[
-			{
-				name : "index",
-				type: "number",
-				message: chalk.magenta.blueBright.bold("what would you like to remove in todos?")
-			}
-			]
-		);
-		
-		let Removetodo = todo.splice(removeTodo.index,1);
-		console.log(Removetodo);
-	}
-
-	// >>"VIEW LIST"<<
-async function view(){
-	console.log(chalk.magentaBright.italic(`\n Your Todo-List\n`));
-	todo.forEach((view,index) =>{
-		console.log(`${index}: ${view}`)
-	});
-}
-}
+    // >>"VIEW LIST"<<
+    async function view() {
+      console.log(chalk.magentaBright.italic(`\n Your Todo-List\n`));
+      todo.forEach((view, index) => {
+        console.log(`${index}: ${view}`);
+      });
+    }
+  }
 }
 myTodo();
-
-

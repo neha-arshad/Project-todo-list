@@ -7,6 +7,7 @@ A Todo-list cli with basic operator
 ```
 npx @neha.dev/-todo-list
 ```
+
 ## package used
+
 inquirer| chalk| chalk-animation
- 

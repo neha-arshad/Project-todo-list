@@ -1,6 +1,6 @@
 {
-  "name": "@neha.dev/-todo-list",
-  "version": "1.0.0",
+  "name": "@neha.dev/todo-list",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "type": "module",

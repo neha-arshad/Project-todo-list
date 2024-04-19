@@ -1,7 +1,8 @@
+#! /usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
 import chalkanimation from "chalk-animation";
-const sleep = (ms = 2000) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms = 2000) => new Promise((resolve) => setTimeout(resolve, ms));
 const animation = chalkanimation.rainbow("Wellcome To My Todo-List📝");
 await sleep();
 animation.stop();
@@ -14,8 +15,8 @@ async function myTodo() {
                 name: "option",
                 type: "list",
                 message: "select an option",
-                choices: ["Add", "change", "remove", "view list", "Exit"]
-            }
+                choices: ["Add", "change", "remove", "view list", "Exit"],
+            },
         ]);
         if (mytodos.option === "Add") {
             await add();
@@ -38,7 +39,7 @@ async function myTodo() {
                 {
                     name: "addtodos",
                     type: "input",
-                    message: chalk.magenta.blueBright.bold("What would you like to add in todos?")
+                    message: chalk.magenta.blueBright.bold("What would you like to add in todos?"),
                 },
             ]);
             todo.push(addTodo.addtodos);
@@ -51,13 +52,13 @@ async function myTodo() {
                 {
                     name: "index",
                     type: "number",
-                    message: chalk.magenta.blueBright.bold("which Todo you want to change?\n\n Enter index No:9")
+                    message: chalk.magenta.blueBright.bold("which Todo you want to change?\n Enter index No:"),
                 },
                 {
                     name: "newtodo",
                     type: "input",
-                    message: chalk.magenta.blueBright.bold("What would you like to add in todos?")
-                }
+                    message: chalk.magenta.blueBright.bold("What would you like to add in todos?"),
+                },
             ]);
             todo[changeTodos.index] = changeTodos.newtodo;
             console.log(chalk.redBright(`\n new todo ${changeTodos.newtodo}`));
@@ -69,15 +70,15 @@ async function myTodo() {
                 {
                     name: "index",
                     type: "number",
-                    message: chalk.magenta.blueBright.bold("what would you like to remove in todos?")
-                }
+                    message: chalk.magenta.blueBright.bold("what would you like to remove in todos?"),
+                },
             ]);
             let Removetodo = todo.splice(removeTodo.index, 1);
             console.log(Removetodo);
         }
         // >>"VIEW LIST"<<
         async function view() {
-            console.log(`\n Your Todo-List\n`);
+            console.log(chalk.magentaBright.italic(`\n Your Todo-List\n`));
             todo.forEach((view, index) => {
                 console.log(`${index}: ${view}`);
             });
