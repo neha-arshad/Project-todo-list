@@ -5,7 +5,7 @@ A Todo-list cli with basic operator
 ## Run the Todo-list
 
 ```
-npx @neha.dev/-todo-list
+npx "@neha.dev/-todo-list"
 ```
 
 ## package used
